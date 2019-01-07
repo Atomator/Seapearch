@@ -1,4 +1,4 @@
-const int pwmIn = 11;
+const int pwmIn = 12;
 
 void setup() {
   Serial.begin(9600);
