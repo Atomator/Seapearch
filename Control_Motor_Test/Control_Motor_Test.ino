@@ -23,18 +23,19 @@ void setup()
   pinMode(pwmTurn, INPUT);
 }
 
-void moveMotor(int motor1Speed, int motor2Speed)   //run both motors in the same direction
+void moveMotor(int motorRight, int motorLeft)   //run both motors in the same direction
 {
-  // turn on motor A
+  // turn on motor right
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
-  // set speed to 150 out 255
-  analogWrite(EnA, motor2Speed);
-  // turn on motor B
+  // set speed to motorRight
+  analogWrite(EnA, motorRight);
+  
+  // turn on motor left
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
-  // set speed to 150 out 255
-  analogWrite(EnB, motor1Speed);
+  // set speed to motorLeft
+  analogWrite(EnB, motorLeft);
   delay(5);
 }
 
@@ -48,11 +49,15 @@ void stopMotor()
 
 void loop()
 {
-  
+
+  // Puts pulse from pin 12 (pwmForward) into a variable
   int pwmDisplay = pulseIn(pwmForward, HIGH, 25000);
+  // Maps values from 0 to 255 for use as pwm
   int pwmMap = map(pwmDisplay, 1488, 1886, 0, 255);
+  // Prints to console for debugging
   Serial.println(pwmMap);
- 
+
+  // Sets each motor value to pwmMap
   moveMotor(pwmMap, pwmMap);
 
   delay(5);
